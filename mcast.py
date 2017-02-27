@@ -22,40 +22,21 @@ signal.signal(signal.SIGINT,signal.SIG_DFL)
 
 s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.getprotobyname("udp"))
 
-#s.connect((SSDP_ADDR,SSDP_PORT))
-
-
 if args.client:
 	b=struct.pack("i",5)
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, b)
 	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
 else:
+	s.bind(('',1900))
 	a1=socket.inet_pton(socket.AF_INET, SSDP_ADDR)
 	a2=struct.pack("=I",0)
 	aa=a1+a2
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, aa)
-	s.bind(('',1900))
 
 ssdpdict={}
 while True:
 	(retn,remaddr)=s.recvfrom(1000)
-#	print remaddr
-#	print retn
-	
 	lines=retn.split('\r\n')
-	cmd=lines[0].split(' ')[0]
-	print retn
-	if cmd != 'NOTIFY':
-		continue
-
+	for line in lines:
+		print remaddr,line
 	
-	adict={}
-	for line in lines[1:]:
-		parts=line.split(":")
-		key=parts[0]
-		value=":".join(parts[1:])
-		adict[key]=value	
-		print remaddr,"%-12.12s %s"%(key,value)
-		if key=='LOCATION':
-			xml=urllib2.urlopen(value).read()
-
