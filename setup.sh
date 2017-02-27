@@ -38,6 +38,7 @@ function recurse {
 		echo "BASE RETN $base $cnt $level"
 		$STEP ip netns exec ${stem}${base}${cnt} zebra -d -f /tmp/zebra-${base}${cnt} -i /tmp/zebra-pid-${base}${cnt}
 		$STEP ip netns exec ${stem}${base}${cnt} ripd -d -f /tmp/ripd-${base}${cnt} -i /tmp/ripd-pid-${base}${cnt}
+		$STEP ip netns exec ${stem}${base}${cnt} pimd -c ./pimd.conf 
 	done
 }
 
@@ -52,6 +53,14 @@ $STEP ip link set eup up
 $STEP ip link set edown up
 $STEP ip netns del $stem
 $STEP ip netns add $stem
+$STEP ip link add $stem-up link eup type vlan id 777
+$STEP ip link add $stem-down link edown type vlan id 777
+
+$STEP ip link set $stem-up netns  $stem  up
+$STEP ip link set $stem-down up
+$STEP ip addr add 192.168.77.1/30 dev $stem-down
+$STEP ip netns exec $stem ip addr add 192.168.77.2/30 dev $stem-up
+$STEP ip netns exec $stem ip route add default via  192.168.77.1 dev $stem-up
 
 
 $STEP cp zebra.conf /tmp/zebra-
@@ -60,6 +69,7 @@ $STEP echo -e "hostname $stem$base$cnt\npassword zebra\nlog stdout\nrouter rip\n
 recurse ""  0 
 $STEP ip netns exec ${stem} zebra -d -f /tmp/zebra- -i /tmp/zebra-pid-
 $STEP ip netns exec ${stem} ripd -d -f /tmp/ripd- -i /tmp/ripd-pid-
+$STEP ip netns exec ${stem} pimd -c ./pimd.conf 
 
 
 
