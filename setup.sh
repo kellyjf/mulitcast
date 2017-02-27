@@ -46,6 +46,7 @@ $STEP rm -f /tmp/rip*d-*
 $STEP rm -f /tmp/zebra*d-*
 $STEP killall ripd
 $STEP killall zebra 
+$STEP killall pimd 
 $STEP ip link del eup &> /dev/null
 $STEP ip link del edown &> /dev/null
 $STEP ip link add eup type veth peer name edown
