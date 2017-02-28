@@ -36,7 +36,6 @@ function recurse {
 		echo "BASE RETN $base $cnt $level"
 		$STEP ip netns exec ${stem}${base}${cnt} zebra -d -f /tmp/zebra-${base}${cnt} -i /tmp/zebra-pid-${base}${cnt}
 		$STEP ip netns exec ${stem}${base}${cnt} ripd -d -f /tmp/ripd-${base}${cnt} -i /tmp/ripd-pid-${base}${cnt}
-		#$STEP ip netns exec ${stem}${base}${cnt} pimd -c /tmp/pimd -
 		$STEP ip netns exec ${stem}${base}${cnt} ./ppimd ${base}${cnt} 
 	done
 }
@@ -49,6 +48,7 @@ function stop_sim {
 	$STEP killall zebra 
 	$STEP killall pimd 
 	$STEP killall ppimd 
+	$STEP killall mcast.py 
 	$STEP iptables -t nat -D POSTROUTING -s 192.168.77.1/30 -j MASQUERADE
 	$STEP ip link del eup &> /dev/null
 	$STEP ip link del edown &> /dev/null
