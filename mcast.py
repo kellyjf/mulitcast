@@ -27,11 +27,11 @@ if args.client:
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, b)
 	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
 else:
-	s.bind(('',1900))
 	a1=socket.inet_pton(socket.AF_INET, SSDP_ADDR)
 	a2=struct.pack("=I",0)
 	aa=a1+a2
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, aa)
+	s.bind(('',1900))
 
 ssdpdict={}
 while True:

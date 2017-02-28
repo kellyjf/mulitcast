@@ -1,0 +1,11 @@
+#!/bin/bash
+
+pid=$(ps -eo pid,cmd | grep "pimd -c /tmp/pimd-$1$"| grep -v grep| awk '{print $1}')
+if [ $pid ]; then
+	shift
+	sudo nsenter -n -m -t $pid "$@"
+else
+	echo "No such pimd on net$1"
+fi
+
+
