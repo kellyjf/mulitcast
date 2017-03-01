@@ -1,0 +1,4 @@
+#!/bin/bash
+
+unshare -m /bin/bash -c "mount -t tmpfs tmpfs /var/run/mrouted; mrouted -c /tmp/mrouted-$1"
+

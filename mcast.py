@@ -7,6 +7,7 @@ import urllib2
 #import xmltodict
 import xml.etree.cElementTree as ct
 import argparse
+import time
 
 parser=argparse.ArgumentParser()
 parser.add_argument("--client", action="store_true", help="Run as a searching client")
@@ -26,12 +27,14 @@ if args.client:
 	b=struct.pack("i",15)
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, b)
 	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
+#	time.sleep(2)
 else:
 	a1=socket.inet_pton(socket.AF_INET, SSDP_ADDR)
 	a2=struct.pack("=I",0)
 	aa=a1+a2
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, aa)
 	s.bind(('',1900))
+	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
 
 	ssdpdict={}
 	while True:
