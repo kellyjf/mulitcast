@@ -126,7 +126,7 @@ $STEP ip netns exec $stem ip route add 224.0.0.0/4 dev down-1 metric 1
 $STEP ip netns exec $stem ip route add 224.0.0.0/4 dev down-2 metric 2
 $STEP ip netns exec ${stem} zebra -d -f /tmp/zebra- -i /tmp/zebra-pid-
 $STEP ip netns exec ${stem} ripd -d -f /tmp/ripd- -i /tmp/ripd-pid-
-$STEP ip netns exec ${stem} ./ppimd
+$STEP ip netns exec ${stem} ./p${mproto}
 
 
 
