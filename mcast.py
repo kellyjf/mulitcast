@@ -34,7 +34,7 @@ else:
 	aa=a1+a2
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, aa)
 	s.bind(('',1900))
-	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
+#	s.sendto(MS,(SSDP_ADDR,SSDP_PORT))
 
 	ssdpdict={}
 	while True:

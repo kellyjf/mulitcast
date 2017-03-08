@@ -1,0 +1,4 @@
+#!/bin/bash
+
+unshare -m /bin/bash -c "mount -t tmpfs tmpfs /var/run/avahi-daemon; avahi-daemon --no-chroot --no-drop-root  -f /tmp/avahi-$1 > /tmp/avahi-log-$1  &"
+
