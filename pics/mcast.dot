@@ -1,0 +1,42 @@
+digraph Mcast {
+	node [shape="record"];
+	node [color="blue"];
+	net [label="{ <up> 192.168.0.77|net|{<d1> 192.168.1.1|<d2> 192.168.2.1}}"];
+	net1 [label="{ <up> 192.168.1.2|net1|{<d1> 192.168.11.1|<d2> 192.168.12.1}}"];
+	net2 [label="{ <up> 192.168.2.2|net2|{<d1> 192.168.21.1|<d2> 192.168.22.1}}"];
+
+	net11 [label="{ <up> 192.168.11.2|net11|{<d1> 192.168.111.1|<d2> 192.168.112.1}}"];
+	net12 [label="{ <up> 192.168.12.2|net12|{<d1> 192.168.121.1|<d2> 192.168.122.1}}"];
+
+	net21 [label="{ <up> 192.168.21.2|net21|{<d1> 192.168.211.1|<d2> 192.168.212.1}}"];
+	net22 [label="{ <up> 192.168.22.2|net22|{<d1> 192.168.221.1|<d2> 192.168.222.1}}"];
+
+	node [color="black"];
+	net111 [label="{ <up> 192.168.111.2|net111}"];
+	net112 [label="{ <up> 192.168.112.2|net112}"];
+	net121 [label="{ <up> 192.168.121.2|net121}"];
+	net122 [label="{ <up> 192.168.122.2|net122}"];
+	net211 [label="{ <up> 192.168.211.2|net211}"];
+	net212 [label="{ <up> 192.168.212.2|net212}"];
+	net221 [label="{ <up> 192.168.221.2|net221}"];
+	net222 [label="{ <up> 192.168.222.2|net222}"];
+
+	edge [dir="none", tailport="n", headport="s"];
+
+	"net":d1 -> "net1":up;
+	"net":d2 -> "net2":up;
+	"net1":d1 -> "net11":up;
+	"net1":d2 -> "net12":up;
+	"net2":d1 -> "net21":up;
+	"net2":d2 -> "net22":up;
+	"net11":d1 -> "net111":up;
+	"net11":d2 -> "net112":up;
+	"net12":d1 -> "net121":up;
+	"net12":d2 -> "net122":up;
+	"net21":d1 -> "net211":up;
+	"net21":d2 -> "net212":up;
+	"net22":d1 -> "net221":up;
+	"net22":d2 -> "net222":up;
+}
+
+
